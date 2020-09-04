@@ -54,11 +54,10 @@ def mp4ToFrames(video):
             if i not in range(video.frame_start, video.frame_end):
                 continue
 
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        cv2.imshow("Images", gray)
+        cv2.imshow("Images", image)
         cv2.waitKey()
 
-        img_list.append(gray)
+        img_list.append(image)
 
     cap.release()
     cv2.destroyAllWindows()
