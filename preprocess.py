@@ -61,6 +61,7 @@ def mp4ToFrames(video):
 
     cap.release()
     cv2.destroyAllWindows()
+    return img_list
 
 
 if __name__ == '__main__':
