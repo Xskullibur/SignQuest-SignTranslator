@@ -3,7 +3,9 @@ import numpy as np
 import cv2
 import os
 
-JSON_FILE = './input/WLASL_v0.3.json'
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+JSON_FILE = './datasets/videos/label/WLASL_v0.3.json'
 OUTPUT_FILE = './output/WLASL.csv'
 
 
@@ -35,6 +37,7 @@ def jsonToCSV():
     data.to_csv(OUTPUT_FILE, index=False)
 
 
+
 def readCSV():
     return pd.read_csv(OUTPUT_FILE, dtype={'video_id': str})
 
@@ -42,7 +45,7 @@ def readCSV():
 # Convert Video into Frames
 def mp4ToFrames(video):
     img_list = []
-    video_dir = f'./input/videos/{video.video_id}.mp4'
+    video_dir = dir_path + f'\\datasets\\videos\\{video.video_id}.mp4'
 
     cap = cv2.VideoCapture(video_dir)
     frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT)
@@ -65,7 +68,7 @@ def mp4ToFrames(video):
 
 
 if __name__ == '__main__':
-    # jsonToCSV()
+    #jsonToCSV()
     data = readCSV()
 
     for video in data.head().iterrows():
