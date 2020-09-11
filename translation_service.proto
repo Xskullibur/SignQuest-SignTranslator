@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package translate;
+
+option java_multiple_files = true;
+option java_package = "sg.edu.nyp.signquest.proto";
+option java_outer_classname = "TranslationServiceProto";
+
+message ImageRequest {
+  bytes pixels = 1;
+}
+
+message TranslatedReply {
+  string char = 1;
+}
+
+
+service TranslationService {
+  rpc Translate (ImageRequest) returns (TranslatedReply) {}
+}
