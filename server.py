@@ -7,6 +7,18 @@ from translation_service_pb2 import TranslatedReply
 
 from PIL import Image
 
+import tensorflow as tf
+
+
+def load_model():
+    # Load the TFLite model and allocate tensors.
+    interpreter = tf.lite.Interpreter(model_path="palm_detection.tflite")
+    interpreter.allocate_tensors()
+
+    # Get input and output tensors.
+    input_details = interpreter.get_input_details()
+    output_details = interpreter.get_output_details()
+
 
 class TranslationService(TranslationServiceServicer):
     def Translate(self, request, context):
@@ -17,6 +29,7 @@ class TranslationService(TranslationServiceServicer):
 
 
 def serve():
+    load_model()
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     add_TranslationServiceServicer_to_server(
         TranslationService(), server)
