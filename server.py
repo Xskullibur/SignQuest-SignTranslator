@@ -34,6 +34,7 @@ def load_all_models():
 
 class TranslationService(TranslationServiceServicer):
     def Translate(self, request, context):
+        global _count
         image = Image.frombuffer('RGBA', size, request.pixels, 'raw').convert('RGB')
         print('Got new request')
         mat = np.array(image)[:, :, ::-1].copy()  # Convert RGB to BGR
@@ -56,6 +57,7 @@ class TranslationService(TranslationServiceServicer):
 
             ## FOR SAVING TRAINING DATA
             cv2.imwrite('./data/'+str(_count)+'.jpg', detection_mat)
+            _count+=1
 
             img_gray = cv2.cvtColor(detection_mat, cv2.COLOR_BGR2GRAY)
             img = cv2.resize(img_gray, (28, 28), interpolation=cv2.INTER_AREA)
