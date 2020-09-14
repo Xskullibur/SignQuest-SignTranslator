@@ -55,7 +55,7 @@ class TranslationService(TranslationServiceServicer):
                         detection_mat)
 
             ## FOR SAVING TRAINING DATA
-            cv2.imwrite('./data/'+_count+'.jpg')
+            cv2.imwrite('./data/'+str(_count)+'.jpg', detection_mat)
 
             img_gray = cv2.cvtColor(detection_mat, cv2.COLOR_BGR2GRAY)
             img = cv2.resize(img_gray, (28, 28), interpolation=cv2.INTER_AREA)
