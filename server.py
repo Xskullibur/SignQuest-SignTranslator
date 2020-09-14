@@ -16,12 +16,13 @@ physical_devices = tf.config.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(physical_devices[0], True)
 from tensorflow.keras.models import load_model
 
-img_margin = 20
+img_margin = 30
 size = (848, 640)
 
 yolo: YOLO = None
 christina = None
 
+_count = 0
 
 def load_all_models():
     global yolo, model
@@ -52,6 +53,9 @@ class TranslationService(TranslationServiceServicer):
 
             cv2.imwrite("./export_detected.jpg",
                         detection_mat)
+
+            ## FOR SAVING TRAINING DATA
+            cv2.imwrite('./data/'+_count+'.jpg')
 
             img_gray = cv2.cvtColor(detection_mat, cv2.COLOR_BGR2GRAY)
             img = cv2.resize(img_gray, (28, 28), interpolation=cv2.INTER_AREA)
