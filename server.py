@@ -45,7 +45,7 @@ class TranslationService(TranslationServiceServicer):
             # for detection in results:
             id, name, confidence, x, y, w, h = detection
 
-            print("%s with %s confidence" % (name, round(copnfidence, 2)))
+            print("%s with %s confidence" % (name, round(confidence, 2)))
             cv2.imwrite("./export.jpg", mat)
             cv2.imwrite("./export_detected_ori.jpg", mat[y:y + h, x:x + w])
 
