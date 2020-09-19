@@ -28,8 +28,8 @@ def load_all_models():
     global yolo, model
     yolo = YOLO("models/cross-hands.cfg", "models/cross-hands.weights", ["hand"])
 
-    # Load Christina
-    model = load_model('christinav8')
+    # Load A.L.I.C.E
+    model = load_model('alice')
 
 
 class TranslationService(TranslationServiceServicer):
