@@ -24,6 +24,33 @@ christina = None
 
 _count = 0
 
+chars = {
+    0: 'A',
+    1: 'B',
+    2: 'C',
+    3: 'D',
+    4: 'E',
+    5: 'F',
+    6: 'G',
+    7: 'H',
+    8: 'I',
+    9: 'K',
+    10: 'L',
+    11: 'M',
+    12: 'N',
+    13: 'O',
+    14: 'P',
+    15: 'Q',
+    16: 'R',
+    17: 'S',
+    18: 'T',
+    19: 'U',
+    20: 'V',
+    21: 'W',
+    22: 'X',
+    23: 'Y'
+}
+
 def load_all_models():
     global yolo, model
     yolo = YOLO("models/cross-hands.cfg", "models/cross-hands.weights", ["hand"])
@@ -64,7 +91,7 @@ class TranslationService(TranslationServiceServicer):
             img = img / 255
             img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
             predicted_index = np.argmax(model.predict(img.reshape((-1, 28, 28, 1))))
-            predicted_char = chr(ord('A') + predicted_index)
+            predicted_char = chars[predicted_index]
 
             print('Predicted Char: '+str(predicted_char))
 
