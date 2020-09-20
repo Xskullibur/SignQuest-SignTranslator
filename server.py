@@ -59,7 +59,7 @@ def load_all_models():
     yolo = YOLO("models/cross-hands.cfg", "models/cross-hands.weights", ["hand"])
 
     # Load A.L.I.C.E
-    model = load_model('alicev2')
+    model = load_model('alicev3')
 
 
 class TranslationService(TranslationServiceServicer):
