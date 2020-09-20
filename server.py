@@ -34,21 +34,24 @@ chars = {
     6: 'G',
     7: 'H',
     8: 'I',
-    9: 'K',
-    10: 'L',
-    11: 'M',
-    12: 'N',
-    13: 'O',
-    14: 'P',
-    15: 'Q',
-    16: 'R',
-    17: 'S',
-    18: 'T',
-    19: 'U',
-    20: 'V',
-    21: 'W',
-    22: 'X',
-    23: 'Y'
+    9: 'J',
+    10: 'K',
+    11: 'L',
+    12: 'M',
+    13: 'N',
+    14: 'O',
+    15: 'P',
+    16: 'Q',
+    17: 'R',
+    18: 'S',
+    19: 'T',
+    20: 'U',
+    21: 'V',
+    22: 'W',
+    23: 'X',
+    24: 'Y',
+    25: 'Z',
+    26: 'nothing'
 }
 
 def load_all_models():
@@ -56,7 +59,7 @@ def load_all_models():
     yolo = YOLO("models/cross-hands.cfg", "models/cross-hands.weights", ["hand"])
 
     # Load A.L.I.C.E
-    model = load_model('alice')
+    model = load_model('alicev2')
 
 
 class TranslationService(TranslationServiceServicer):
@@ -82,21 +85,26 @@ class TranslationService(TranslationServiceServicer):
             cv2.imwrite("./export_detected.jpg",
                         detection_mat)
 
-            ## FOR SAVING TRAINING DATA
-            cv2.imwrite('./data2/'+str(_count)+'.jpg', detection_mat)
-            _count+=1
 
-            img_gray = cv2.cvtColor(detection_mat, cv2.COLOR_BGR2GRAY)
-            img = cv2.resize(img_gray, (28, 28), interpolation=cv2.INTER_AREA)
-            img = img / 255
-            img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
-            predicted_index = np.argmax(model.predict(img.reshape((-1, 28, 28, 1))))
+
+            # img_gray = cv2.cvtColor(detection_mat, cv2.COLOR_BGR2GRAY)
+            img = cv2.resize(detection_mat, (75, 75), interpolation=cv2.INTER_AREA)
+            # img = img / 255
+            # img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
+            ## FOR SAVING TRAINING DATA
+            cv2.imwrite('./data2/'+str(_count)+'.jpg', img)
+            _count+=1
+            predicted_index = np.argmax(model.predict(img.reshape((-1, 75, 75, 3))))
             predicted_char = chars[predicted_index]
 
             print('Predicted Char: '+str(predicted_char))
 
             return TranslatedReply(char=predicted_char)
-        return TranslatedReply(char='_')
+        new_mat = cv2.rotate(cv2.resize(mat, (75, 75)), cv2.ROTATE_90_COUNTERCLOCKWISE)
+        predicted_index = np.argmax(model.predict(new_mat.reshape((-1, 75, 75, 3))))
+        predicted_char = chars[predicted_index]
+        print('Predicted Char: ' + str(predicted_char))
+        return TranslatedReply(char=predicted_char)#'_'
 
 
 def serve():
